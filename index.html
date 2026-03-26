@@ -621,10 +621,65 @@
     transform: translateY(0);
   }
 
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   /* ── MOBILE ── */
-  @media(max-width:600px) {
-    nav { padding: 12px 20px; }
-    .nav-links { display: none; }
+  @media(max-width:768px) {
+    nav { padding: 14px 20px; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; right: -100%;
+      width: 70%;
+      max-width: 280px;
+      height: 100vh;
+      background: rgba(30,16,6,0.98);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(201,168,76,0.2);
+      padding: 90px 32px 40px;
+      gap: 8px;
+      transition: right 0.35s ease;
+      z-index: 150;
+    }
+    .nav-links.open { right: 0; }
+    .nav-links li { border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .nav-links a {
+      display: block;
+      padding: 14px 0;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+    }
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 140;
+    }
+    .nav-overlay.open { display: block; }
     .fee-section, .timing-section, .features-section, .contact-section { padding: 60px 16px; }
     .contact-card { padding: 40px 24px; }
   }
@@ -633,9 +688,13 @@
 <body>
 
 <!-- NAVBAR -->
+<div class="nav-overlay" id="navOverlay"></div>
 <nav>
   <a href="#" class="nav-brand">✦ THE VISION LIBRARY</a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#timing">Timings</a></li>
     <li><a href="#fees">Fees</a></li>
@@ -953,15 +1012,31 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function toggleMenu(open) {
+    hamburger.classList.toggle('open', open);
+    navLinks.classList.toggle('open', open);
+    navOverlay.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', () => toggleMenu(!hamburger.classList.contains('open')));
+  navOverlay.addEventListener('click', () => toggleMenu(false));
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
   // Smooth nav active state
   const sections = document.querySelectorAll('section[id], div[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinkItems = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(s => {
       if (window.scrollY >= s.offsetTop - 100) current = s.id;
     });
-    navLinks.forEach(a => {
+    navLinkItems.forEach(a => {
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
     });
   });
