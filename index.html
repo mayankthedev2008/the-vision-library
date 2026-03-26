@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vision Library – Where Focus Meets Success</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97e;
+    --gold-dark: #8b6914;
+    --cream: #f5ede0;
+    --cream-dark: #eddcca;
+    --brown-deep: #2b1a0e;
+    --brown-mid: #5c3d1e;
+    --brown-light: #8b5e3c;
+    --green-lib: #2d5a27;
+    --blue-lib: #1a3a6b;
+    --teal-lib: #1a5f5f;
+    --orange-lib: #8b3a0e;
+    --purple-lib: #4a1a6b;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(43,26,14,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--brown-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 100;
+    background: rgba(43,26,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1a0e06 0%, #2b1a0e 40%, #1a1206 100%);
+  }
+  .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px),
+      repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px);
+  }
+  /* Decorative corner borders */
+  .hero-border {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid rgba(201,168,76,0.2);
+    pointer-events: none;
+  }
+  .hero-border::before, .hero-border::after {
+    content: '';
+    position: absolute;
+    width: 60px; height: 60px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .hero-border::before {
+    top: -1px; left: -1px;
+    border-width: 2px 0 0 2px;
+  }
+  .hero-border::after {
+    bottom: -1px; right: -1px;
+    border-width: 0 2px 2px 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 120px 20px 80px;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-the {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    animation: fadeUp 1.2s 0.1s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    animation: fadeUp 1.2s 0.2s ease both;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-subtitle-word {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    letter-spacing: 0.35em;
+    color: var(--gold-light);
+    margin-top: 12px;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero-tagline {
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    color: rgba(245,237,224,0.6);
+    font-style: italic;
+    margin: 18px 0 10px;
+    letter-spacing: 0.05em;
+    animation: fadeUp 1.2s 0.4s ease both;
+  }
+  .hero-by {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 40px;
+    animation: fadeUp 1.2s 0.45s ease both;
+  }
+  .hero-divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto;
+    animation: fadeUp 1.2s 0.5s ease both;
+  }
+  .hero-cta-row {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 36px;
+    animation: fadeUp 1.2s 0.6s ease both;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--brown-deep);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 700;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.4);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 15px 36px;
+    border: 1.5px solid var(--gold);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 700;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn-outline:hover {
+    background: rgba(201,168,76,0.1);
+    transform: translateY(-2px);
+  }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: var(--gold);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 6vw, 80px);
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--brown-deep);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown-mid);
+    font-weight: 700;
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; z-index: 1; }
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-rule {
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto 0;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media(max-width:768px){ .about { grid-template-columns:1fr; gap:40px; padding:60px 20px; } }
+  .about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  .about-text h2 em { color: var(--gold); font-style: italic; }
+  .about-text p {
+    color: rgba(245,237,224,0.7);
+    line-height: 1.9;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  .about-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .about-badge {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px;
+    transition: all 0.3s;
+  }
+  .about-badge:hover {
+    background: rgba(201,168,76,0.14);
+    transform: translateX(6px);
+  }
+  .badge-icon { font-size: 1.6rem; margin-bottom: 6px; }
+  .badge-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .badge-desc {
+    font-size: 0.88rem;
+    color: rgba(245,237,224,0.6);
+    line-height: 1.5;
+  }
+
+  /* ── FEATURES ── */
+  .features-section {
+    padding: 100px 40px;
+    background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%);
+  }
+  .features-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-card:hover {
+    background: rgba(201,168,76,0.07);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+  .feature-icon { font-size: 2.4rem; margin-bottom: 16px; }
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .feature-desc {
+    font-size: 0.88rem;
+    color: rgba(245,237,224,0.6);
+    line-height: 1.7;
+  }
+
+  /* ── TIMING ── */
+  .timing-section {
+    padding: 100px 40px;
+    background: rgba(0,0,0,0.2);
+  }
+  .timing-wrap { max-width: 1050px; margin: 0 auto; }
+  .timing-table-container {
+    overflow-x: auto;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead th {
+    padding: 16px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  thead th:first-child { background: #2b1a0e; color: var(--gold); }
+  thead th:nth-child(2) { background: #2d5a27; }
+  thead th:nth-child(3) { background: #1a3a6b; }
+  thead th:nth-child(4) { background: #1a5f5f; }
+  thead th:nth-child(5) { background: #8b3a0e; }
+  thead th:nth-child(6) { background: #5c3d1e; }
+  thead th:nth-child(7) { background: #4a1a6b; color: var(--cream); }
+  thead th:nth-child(8) { background: #0e1a2b; color: var(--gold); }
+  tbody tr { border-bottom: 1px solid rgba(201,168,76,0.1); }
+  tbody tr:hover { background: rgba(201,168,76,0.06); }
+  tbody td {
+    padding: 14px;
+    text-align: center;
+    color: rgba(245,237,224,0.75);
+    white-space: nowrap;
+  }
+  tbody td:first-child {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1rem;
+  }
+  .night-col { background: rgba(14,26,43,0.4) !important; color: var(--gold-light) !important; }
+  .timing-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: rgba(245,237,224,0.45);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── FEE SECTION ── */
+  .fee-section {
+    padding: 100px 40px;
+  }
+  .fee-wrap { max-width: 1050px; margin: 0 auto; }
+  .fee-table-container {
+    overflow-x: auto;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .fee-header-row th {
+    padding: 16px 18px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  .fee-header-row th:first-child { background: #2b1a0e; color: var(--gold); }
+  .fee-header-row th:nth-child(2) { background: #2d5a27; }
+  .fee-header-row th:nth-child(3) { background: #1a3a6b; }
+  .fee-header-row th:nth-child(4) { background: #1a5f5f; }
+  .fee-header-row th:nth-child(5) { background: #8b3a0e; }
+  .fee-header-row th:nth-child(6) { background: #4a1a6b; }
+  .fee-body td {
+    padding: 15px 18px;
+    text-align: center;
+    color: rgba(245,237,224,0.8);
+    font-size: 1rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .fee-body tr:hover { background: rgba(201,168,76,0.06); }
+  .fee-body td:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+  .fee-free { color: #5aba5a !important; font-weight: 900 !important; }
+  .fee-dash { color: rgba(245,237,224,0.25) !important; }
+
+  .fee-notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .fee-note-card {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .fee-note-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .fee-note-text { font-size: 0.88rem; color: rgba(245,237,224,0.7); line-height: 1.5; }
+  .fee-note-text strong { color: var(--gold); display: block; margin-bottom: 2px; }
+
+  /* ── DEMO BANNER ── */
+  .demo-banner {
+    margin: 40px auto;
+    max-width: 700px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1.5px solid var(--gold);
+    padding: 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-banner::before {
+    content: '★';
+    position: absolute;
+    font-size: 8rem;
+    color: rgba(201,168,76,0.04);
+    top: -20px; right: -20px;
+  }
+  .demo-banner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .demo-banner p { color: rgba(245,237,224,0.7); font-size: 0.92rem; margin-bottom: 20px; }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    padding: 100px 40px;
+    background: rgba(0,0,0,0.25);
+    text-align: center;
+  }
+  .contact-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 60px 50px;
+  }
+  .contact-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .contact-logo-text span { color: var(--gold); }
+  .contact-by {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+  .contact-divider { width: 60px; height: 1px; background: var(--gold); margin: 0 auto 32px; }
+  .contact-info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: rgba(245,237,224,0.75);
+  }
+  .contact-info-item .ci-icon { font-size: 1.2rem; }
+  .visit-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--brown-deep);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+  .visit-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #150d06;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 28px 40px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(245,237,224,0.3);
+    letter-spacing: 0.05em;
+  }
+  footer span { color: var(--gold); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media(max-width:600px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .fee-section, .timing-section, .features-section, .contact-section { padding: 60px 16px; }
+    .contact-card { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-brand">✦ THE VISION LIBRARY</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#timing">Timings</a></li>
+    <li><a href="#fees">Fees</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-border"></div>
+  <div class="hero-content">
+    <p class="hero-the">✦ &nbsp; The &nbsp; ✦</p>
+    <h1 class="hero-title">VISION<br><span>LIBRARY</span></h1>
+    <p class="hero-subtitle-word">By D&amp;B Gupta</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Where Focus Meets Success</p>
+    <p style="font-size:0.82rem;color:rgba(245,237,224,0.4);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:32px;">Delhi's Premier Study Space</p>
+    <div class="hero-cta-row">
+      <a href="#fees" class="btn-primary">View Membership Plans</a>
+      <a href="#contact" class="btn-outline">Visit Us Today</a>
+    </div>
+    <p style="margin-top:28px;font-size:0.8rem;color:rgba(201,168,76,0.6);">🎓 Try 1 Demo Class for just ₹99</p>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-num">7+</div>
+    <div class="stat-label">Time Slots Daily</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24hr</div>
+    <div class="stat-label">Night Shift Available</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">₹900</div>
+    <div class="stat-label">Starting Monthly</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Focus Guaranteed</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="about">
+    <div class="about-text fade-in">
+      <h2>Your <em>Sanctuary</em> for Serious Study</h2>
+      <p>The Vision Library is Delhi's dedicated study space designed for students who refuse to settle for mediocrity. With fixed timing slots, personal lockers, and a distraction-free environment — we ensure every minute you spend here counts.</p>
+      <p>Whether you're preparing for competitive exams, catching up on coursework, or need a quiet focused zone away from home — Vision Library is built for <em>you</em>.</p>
+      <div style="margin-top:32px;">
+        <a href="#fees" class="btn-primary">Explore Plans</a>
+      </div>
+    </div>
+    <div class="about-badges fade-in">
+      <div class="about-badge">
+        <div class="badge-icon">📚</div>
+        <div class="badge-title">Distraction-Free Zone</div>
+        <div class="badge-desc">Silence maintained. Mobile-free study environment. Pure focus, always.</div>
+      </div>
+      <div class="about-badge">
+        <div class="badge-icon">🔒</div>
+        <div class="badge-title">Personal Lockers</div>
+        <div class="badge-desc">Secure storage for your books and belongings. Your stuff, always safe.</div>
+      </div>
+      <div class="about-badge">
+        <div class="badge-icon">🌙</div>
+        <div class="badge-title">Night Shift Available</div>
+        <div class="badge-desc">Study till 7 AM. Perfect for night owls and exam crammers.</div>
+      </div>
+      <div class="about-badge">
+        <div class="badge-icon">📅</div>
+        <div class="badge-title">Monthly &amp; Quarterly Plans</div>
+        <div class="badge-desc">Flexible plans starting ₹900/month. Quarterly saves up to 15%.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="section-header fade-in">
+    <p class="section-eyebrow">Why Choose Us</p>
+    <h2 class="section-title">Everything a <em>Serious Student</em> Needs</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card fade-in">
+      <div class="feature-icon">⏰</div>
+      <div class="feature-title">Fixed Time Slots</div>
+      <div class="feature-desc">Choose from 4 to 14-hour slots or full-day passes. Consistent routine = better results.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🪑</div>
+      <div class="feature-title">Reserved Seating</div>
+      <div class="feature-desc">Your seat, reserved just for you. No hunting for space every day.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">💡</div>
+      <div class="feature-title">Optimal Lighting</div>
+      <div class="feature-desc">Ergonomically designed study stations with proper lighting to reduce eye strain.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🌬️</div>
+      <div class="feature-title">AC Environment</div>
+      <div class="feature-desc">Comfortable, cool, and quiet. Ideal conditions for deep concentration.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">📦</div>
+      <div class="feature-title">Secure Lockers</div>
+      <div class="feature-desc">Personal locker included in Full Day plans. Leave your books safely overnight.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Result-Oriented</div>
+      <div class="feature-desc">A community of serious students. The right peer environment pushes you forward.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMING -->
+<section class="timing-section" id="timing">
+  <div class="timing-wrap">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Schedule</p>
+      <h2 class="section-title">Available <em>Time Slots</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="timing-table-container fade-in">
+      <table>
+        <thead>
+          <tr>
+            <th>Slot #</th>
+            <th>🕐 4 HRS</th>
+            <th>🕐 6 HRS</th>
+            <th>🕐 8 HRS</th>
+            <th>🕐 10 HRS</th>
+            <th>🕐 12 HRS</th>
+            <th>Full Day</th>
+            <th>🌙 Night Shift</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>6am – 10am</td>
+            <td>6am – 12pm</td>
+            <td>6am – 2pm</td>
+            <td>6am – 4pm</td>
+            <td>6am – 4pm</td>
+            <td>6am – 11pm</td>
+            <td class="night-col">8pm – 12am (4hrs)</td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>10am – 2pm</td>
+            <td>12pm – 6pm</td>
+            <td>10am – 6pm</td>
+            <td>8am – 6pm</td>
+            <td>8am – 8pm</td>
+            <td>–</td>
+            <td class="night-col">9pm – 12am (3hrs)</td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>2pm – 6pm</td>
+            <td>4pm – 10pm</td>
+            <td>2pm – 10pm</td>
+            <td>12pm – 10pm</td>
+            <td>10am – 10pm</td>
+            <td>–</td>
+            <td class="night-col">10pm – 6am (6hrs)</td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>6pm – 10pm</td>
+            <td>–</td>
+            <td>–</td>
+            <td>–</td>
+            <td>–</td>
+            <td>–</td>
+            <td class="night-col">11pm – 7am (6hrs)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="timing-note fade-in">⚠ Timings are fixed and cannot be changed. Please choose your slot carefully at the time of admission.</p>
+  </div>
+</section>
+
+<!-- FEES -->
+<section class="fee-section" id="fees">
+  <div class="fee-wrap">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Membership</p>
+      <h2 class="section-title">Transparent <em>Fee Structure</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="fee-table-container fade-in">
+      <table>
+        <thead>
+          <tr class="fee-header-row">
+            <th>Time Slot</th>
+            <th>Monthly (₹)</th>
+            <th>Quarterly (₹)</th>
+            <th>Reservation (₹)</th>
+            <th>Locker (₹)</th>
+            <th>Combo (₹)</th>
+          </tr>
+        </thead>
+        <tbody class="fee-body">
+          <tr><td>4 Hours</td><td>900</td><td>2,400</td><td>200</td><td>200</td><td>350</td></tr>
+          <tr><td>6 Hours</td><td>1,100</td><td>3,000</td><td>200</td><td>200</td><td>350</td></tr>
+          <tr><td>8 Hours</td><td>1,300</td><td>3,600</td><td>200</td><td>200</td><td>350</td></tr>
+          <tr><td>10 Hours</td><td>1,500</td><td>4,200</td><td>100</td><td>150</td><td>250</td></tr>
+          <tr><td>12 Hours</td><td>1,700</td><td>4,800</td><td class="fee-free">FREE</td><td>100</td><td class="fee-dash">—</td></tr>
+          <tr><td>14 Hours</td><td>1,900</td><td>5,400</td><td class="fee-free">FREE</td><td>100</td><td class="fee-dash">—</td></tr>
+          <tr><td>Full Day</td><td>2,100</td><td>6,000</td><td class="fee-free">FREE</td><td class="fee-free">FREE</td><td class="fee-dash">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fee-notes fade-in">
+      <div class="fee-note-card">
+        <div class="fee-note-icon">💸</div>
+        <div class="fee-note-text"><strong>One Day Pass</strong>Try the library for just ₹99/- before committing to a monthly plan.</div>
+      </div>
+      <div class="fee-note-card">
+        <div class="fee-note-icon">🎓</div>
+        <div class="fee-note-text"><strong>Free Demo Class</strong>1 free demo session available before joining. No pressure.</div>
+      </div>
+      <div class="fee-note-card">
+        <div class="fee-note-icon">⚠️</div>
+        <div class="fee-note-text"><strong>Non-Refundable</strong>All fees paid are strictly non-refundable. Please confirm your slot carefully.</div>
+      </div>
+    </div>
+
+    <!-- DEMO BANNER -->
+    <div class="demo-banner fade-in">
+      <h3>🎯 Start with a Free Demo</h3>
+      <p>Experience the Vision Library environment before committing. One free trial class, on us. Come feel the difference.</p>
+      <a href="#contact" class="btn-primary">Book Your Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-header fade-in">
+    <p class="section-eyebrow">Visit Us</p>
+    <h2 class="section-title">Come <em>Study With Us</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="contact-card fade-in">
+    <div class="contact-logo-text">THE <span>VISION</span> LIBRARY</div>
+    <div class="contact-by">By D&amp;B Gupta</div>
+    <div class="contact-divider"></div>
+    <div class="contact-info-row">
+      <div class="contact-info-item">
+        <span class="ci-icon">📍</span>
+        <span>Shastri Nagar, Delhi</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="ci-icon">⏰</span>
+        <span>Open 6 AM – 7 AM (Next Day) · Night Shift Available</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="ci-icon">💰</span>
+        <span>Day Pass ₹99 · Monthly from ₹900</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="ci-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18" style="vertical-align:middle;"><rect width="24" height="18" rx="2" fill="#fff" stroke="#ddd" stroke-width="0.5"/><path d="M0 2l12 8L24 2" fill="none" stroke="#EA4335" stroke-width="1.5"/><path d="M0 0h24v18H0z" fill="none"/><path d="M0 2v14h4V6.5L12 12l8-5.5V16h4V2L12 10z" fill="#EA4335"/></svg>
+        </span>
+        <span><a href="mailto:TheVisionLibrarryy@gmail.com" style="color:inherit;text-decoration:none;">TheVisionLibrarryy@gmail.com &nbsp;<em style="font-size:0.8em;opacity:0.7;">· Tap to Mail</em></a></span>
+      </div>
+      <div class="contact-info-item">
+        <span class="ci-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="vertical-align:middle;"><defs><radialGradient id="igGrad" cx="30%" cy="110%" r="130%"><stop offset="0%" stop-color="#FFD883"/><stop offset="10%" stop-color="#FFCA6A"/><stop offset="30%" stop-color="#F77737"/><stop offset="50%" stop-color="#E1306C"/><stop offset="70%" stop-color="#C13584"/><stop offset="85%" stop-color="#833AB4"/><stop offset="100%" stop-color="#405DE6"/></radialGradient></defs><rect width="24" height="24" rx="7" fill="url(#igGrad)"/><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="#fff"/></svg>
+        </span>
+        <span><a href="https://www.instagram.com/thevisionlibraryy" target="_blank" style="color:inherit;text-decoration:none;">@thevisionlibraryy &nbsp;<em style="font-size:0.8em;opacity:0.7;">· Tap to Follow</em></a></span>
+      </div>
+    </div>
+    <div class="contact-info-row" style="margin-top:0;">
+      <div class="contact-info-item">
+        <span class="ci-icon">📞</span>
+        <span><a href="tel:9971407653" style="color:inherit;text-decoration:none;">9971407653</a></span>
+      </div>
+      <div class="contact-info-item">
+        <span class="ci-icon">📞</span>
+        <span><a href="tel:8448498546" style="color:inherit;text-decoration:none;">8448498546</a></span>
+      </div>
+    </div>
+    <a href="tel:9971407653" class="visit-btn">📞 Enquire Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>The Vision Library</span> · By D&amp;B Gupta · Where Focus Meets Success</p>
+  <p style="margin-top:6px;">All fees are non-refundable · Timings are fixed · 1 Demo Class Available</p>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
